@@ -1,0 +1,35 @@
+nginx:
+  build: ./nginx/
+  container_name: nginx-container
+  ports:
+    - 80:80
+    - 443:443
+  links:
+    - php
+  volumes_from:
+    - app-data
+
+php:
+  build: ./php/
+  container_name: php-container
+  expose:
+    - 9000
+  links:
+    - pgsql
+  volumes_from:
+    - app-data
+
+app-data:
+  image: php:7.0-fpm
+  container_name: app-data-container
+  volumes:
+    - ./www/html/:/var/www/html/
+  command: “true”
+
+pgsql:
+  build: ./postgres
+  environment:
+    - POSTGRES_PASSWORD=supersecretpassword
+    - POSTGRES_DB=testrmdb
+    - POSTGRES_USER=ecomuser
+  container_name: pgsql-container
