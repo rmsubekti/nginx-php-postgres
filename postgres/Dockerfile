@@ -1,5 +1,5 @@
 # Derived from official mysql image (our base image)
-FROM postgres:latest
+FROM postgres:15-bullseye
 
 # Add the content of the sql-scripts/ directory to your image
 # All scripts in docker-entrypoint-initdb.d/ are automatically
